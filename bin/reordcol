@@ -1,0 +1,125 @@
+#!/bin/bash
+
+
+usage() {
+    cat <<-EOF
+#BEGIN_DO_NOT_MODIFY:make update-doc
+#END_DO_NOT_MODIFY:make update-doc
+EOF
+    exit 0
+}
+
+error() {
+    STATUS="$1"
+    MSG="$2"
+    cat >&2 <<-EOF
+${0##*/}: ${MSG}
+Try \`${0##*/} -h\` for more information.
+EOF
+    exit 1
+}
+
+
+while getopts ":hf:c:d:" o
+do
+	  case "$o" in
+		    h)
+                usage
+            ;;
+	    	f)
+                list="${OPTARG}"
+                by='field'
+            ;;
+	    	c)
+                list="${OPTARG}"
+                by='chars'
+            ;;
+            d)
+                delimiter="${OPTARG}"
+            ;;
+            ?)
+                error "An argument is requiered for option -${OPTARG}."
+            ;;
+	  esac
+done
+
+shift $((${OPTIND} - 1))
+
+file="$1"
+if [ -z ${file} ]; then
+    file="-"
+fi
+
+#echo "list: ${list}"
+#echo "by: ${by}"
+#echo "delimiter: ${delimiter}"
+#echo "file: ${file}"
+
+awkscript=$(mktemp)
+
+trap "rm -f ${awkscript}" EXIT
+
+cat - > ${awkscript} <<-'EOD'
+function to_index(field) {
+    if (field ~ /^[0-9]+$/) {
+        idx = field;
+        if (idx > NF || idx == 0) {
+            printf "Error: Invalid column number #%s (min=1, max=%s) [field=%s]\n", idx, NF, field > "/dev/stderr";
+            exit 1;
+        }
+        return idx;
+    } else if (field ~ /^-[0-9]+$/) {
+        idx = NF+field+1;
+        if (idx > NF || idx < 1) {
+            printf "Error: Invalid column number #%s (min=1, max=%s) [field=%s]\n", idx, NF, field > "/dev/stderr";
+            exit 1;
+        }
+        return idx;
+    }
+    printf "Error: Invalid field [%s]\n", field > "/dev/stderr";
+    exit 1;
+}
+
+BEGIN {
+    OFS = FS;
+    split(list, FIELDSARR, ",");
+    print list "<" FS ">";
+}
+
+{
+    first=1
+    for (r in FIELDSARR) {
+        if (first == 0) {
+            printf "%s", OFS;
+        } else {
+            first = 0;
+        }
+        #print "r=" r " => " FIELDSARR[r] > "/dev/stderr";
+        if (FIELDSARR[r] ~ /^[0-9]+$/ || FIELDSARR[r] ~ /^-[0-9]+$/) {
+            idx = to_index(FIELDSARR[r]);
+            printf "%s", $idx;
+        } else if (FIELDSARR[r] ~ /^((-)?[0-9]+)?:((-)?[0-9]+)?$/) {
+            split(FIELDSARR[r], tab, ":");
+            from = to_index(tab[1] ~ /^$/ ? 1 : tab[1]);
+            to = to_index(tab[2] ~ /^$/ ? NF : tab[2]);
+            for (i=from; i<=to; i++) {
+                printf "%s", $i;
+                if (i != to) {
+                    printf "%s", OFS;
+                }
+            }
+            #printf "from=%s to=%s\n", from, to > "/dev/stderr";
+        } else {
+            printf "Error: Invalid syntax [field=%s]\n", FIELDSARR[r] > "/dev/stderr";
+        }
+    }
+    printf "%s", ORS;
+}
+EOD
+
+while [[ -n "${file}" ]];
+do
+    awk -f ${awkscript} -v list=${list} -F "${delimiter}" ${file}
+    shift
+    file="$1"
+done
