@@ -35,18 +35,24 @@ install-dependencies:
 	echo "You must install dependencies."
 	echo "sudo make install-dependencies"
 
-doc/generated/man/man1/%.1: doc/%.adoc doc/VERSION
+.PHONY: update-year
+update-year:
+	@echo "Update year in doc/copyright.adoc"
+	@year=$(shell date +'%Y')
+	@sed -ri "s#Copyright \(C\) [0-9]{4}#Copyright (C) $$year#" doc/copyright.adoc
+
+doc/generated/man/man1/%.1: doc/%.adoc doc/VERSION doc/copyright.adoc
 	@echo "Create $@"
 	@asciidoctor -b manpage -a release-version="$(VERSION)" $< -o $@
 
-doc/generated/md/%.md: doc/%.adoc doc/VERSION
+doc/generated/md/%.md: doc/%.adoc doc/VERSION doc/copyright.adoc
 	@echo "Create $@"
 	@SCRIPT=$(shell basename "$@" | sed 's/\..*//')
 	@asciidoctor -b docbook doc/$$SCRIPT.adoc -o doc/generated/md/$$SCRIPT.xml
 	@pandoc -t gfm+footnotes -f docbook -t markdown_strict doc/generated/md/$$SCRIPT.xml -o doc/generated/md/$$SCRIPT.md
 	@rm -f doc/generated/md/$$SCRIPT.xml
 
-doc/generated/txt/%.1.txt: doc/generated/man/man1/%.1 doc/VERSION
+doc/generated/txt/%.1.txt: doc/generated/man/man1/%.1 doc/VERSION doc/copyright.adoc
 	@echo "Create $@"
 	@man -l $< > $@
 	@SCRIPT=$(shell basename "$@" | sed 's/\..*//')
@@ -77,6 +83,7 @@ update-script: $(BIN_SCRIPTS) doc/VERSION
 .PHONY: commit-release
 commit-release: update-version
 	@echo "Update documentation"
+	make update-year
 	make update-doc
 	@echo "Commit release $$VERSION"
 	git add -u .

@@ -3,14 +3,17 @@
 Description
 ===========
 
-**oc** is a small utility to count occurences of a string or pattern in
-each line of files.
+**rearr** is a small utility to rearrange sections in each line of
+files.
 
-The destination directory will contain 3 sub-directories: `bin`, `share`
-and `man`.
+It can remove and duplicate sections and also change the order of
+sections.
 
 Installation
 ============
+
+The destination directory will contain 3 sub-directories: `bin`, `share`
+and `man`.
 
 **Using git repo.**
 
