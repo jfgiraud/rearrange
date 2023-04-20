@@ -1,0 +1,197 @@
+#!/bin/bash
+
+
+usage() {
+    (cat <<-EOF
+#BEGIN_DO_NOT_MODIFY:make update-doc
+REARR(1)                                                                                      User commands                                                                                     REARR(1)
+
+NAME
+       rearr - Rearrange sections in each lines of files
+
+SYNOPSIS
+       rearr [OPTION] [FILE]
+
+DESCRIPTION
+       rearr is a small utility to rearrange sections in each line of files.
+
+       You can remove and duplicate sections and also change the order.
+
+       With no FILE, or when FILE is -, read standard input.
+
+OPTIONS
+       -h
+           Display help.
+
+       -d DELIM
+           Use DELIM instead of TAB for field delimiter.
+
+       -o DELIM
+           Use DELIM as the output delimiter the default is to use the input delimiter.
+
+       -f LIST
+           Select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified. Each item of the list is a number (=1 for the first, -1 for the last)
+           or a range (start:end where values are includes)
+
+       -c LIST
+           select only these characters. Each item of the list is a number (=1 for the first, -1 for the last) or a range (start:end where values are includes)
+
+EXAMPLES
+       Display fields 4, 1 to 3 and the 2 lasts of /etc/passwd changing the output separator to ;.
+
+           $ rearr -f4,1:3,-2: -d: -o';' /etc/passwd | head
+           0;root;x;0;/root;/bin/bash
+           1;daemon;x;1;/usr/sbin;/usr/sbin/nologin
+           2;bin;x;2;/bin;/usr/sbin/nologin
+           3;sys;x;3;/dev;/usr/sbin/nologin
+           65534;sync;x;4;/bin;/bin/sync
+           60;games;x;5;/usr/games;/usr/sbin/nologin
+           12;man;x;6;/var/cache/man;/usr/sbin/nologin
+           7;lp;x;7;/var/spool/lpd;/usr/sbin/nologin
+           8;mail;x;8;/var/mail;/usr/sbin/nologin
+           9;news;x;9;/var/spool/news;/usr/sbin/nologin
+
+AUTHOR
+       Written by Jean-François Giraud.
+
+COPYRIGHT
+       Copyright © 2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There is
+       NO WARRANTY, to the extent permitted by law.
+
+rearrange-columns 0.0.7                                                                        2023-04-19                                                                                       REARR(1)
+#END_DO_NOT_MODIFY:make update-doc
+EOF
+) | tail -n +4 | head -n -9
+    exit 0
+}
+
+error() {
+    STATUS="$1"
+    MSG="$2"
+    cat >&2 <<-EOF
+${0##*/}: ${MSG}
+Try \`${0##*/} -h\` for more information.
+EOF
+    exit 1
+}
+
+delimiter="\t"
+while getopts ":hf:c:d:o:" o
+do
+	  case "$o" in
+		    h)
+                usage
+            ;;
+	    	f)
+                if [[ -n "${by}" ]]; then
+                    error 2 "a list of ${by}s is already defined"
+                fi
+                list="${OPTARG}"
+                by='field'
+            ;;
+	    	c)
+                if [[ -n "${by}" ]]; then
+                    error 2 "a list of ${by} is already defined"
+                fi
+                list="${OPTARG}"
+                by='character'
+            ;;
+            d)
+                delimiter="${OPTARG}"
+            ;;
+            o)
+                output_delimiter="${OPTARG}"
+            ;;
+            ?)
+                error "An argument is requiered for option -${OPTARG}."
+            ;;
+	  esac
+done
+
+if [[ -z "${list}" ]]; then
+    error 1 "you must specify a list of characters or fields"
+fi
+
+shift $((${OPTIND} - 1))
+
+file="$1"
+if [ -z ${file} ]; then
+    file="-"
+fi
+
+#echo "list: ${list}"
+#echo "by: ${by}"
+#echo "delimiter: ${delimiter}"
+#echo "file: ${file}"
+
+awkscript=$(mktemp)
+
+trap "rm -f ${awkscript}" EXIT
+
+output_delimiter=${output_delimiter:=$delimiter}
+
+cat - > ${awkscript} <<-'EOD'
+#BEGIN_DO_NOT_MODIFY:make update-script
+function to_index(field) {
+    if (field ~ /^[0-9]+$/) {
+        idx = field;
+        if (idx > NF || idx == 0) {
+            printf "Error: Invalid column number #%s (min=1, max=%s) [field=%s]\n", idx, NF, field > "/dev/stderr";
+            exit 1;
+        }
+        return idx;
+    } else if (field ~ /^-[0-9]+$/) {
+        idx = NF+field+1;
+        if (idx > NF || idx < 1) {
+            printf "Error: Invalid column number #%s (min=1, max=%s) [field=%s]\n", idx, NF, field > "/dev/stderr";
+            exit 1;
+        }
+        return idx;
+    }
+    printf "Error: Invalid field [%s]\n", field > "/dev/stderr";
+    exit 1;
+}
+
+BEGIN {
+    split(list, FIELDSARR, ",");
+}
+
+{
+    first=1
+    for (r in FIELDSARR) {
+        if (first == 0) {
+            printf "%s", OFS;
+        } else {
+            first = 0;
+        }
+        #print "r=" r " => " FIELDSARR[r] > "/dev/stderr";
+        if (FIELDSARR[r] ~ /^[0-9]+$/ || FIELDSARR[r] ~ /^-[0-9]+$/) {
+            idx = to_index(FIELDSARR[r]);
+            printf "%s", $idx;
+        } else if (FIELDSARR[r] ~ /^((-)?[0-9]+)?:((-)?[0-9]+)?$/) {
+            split(FIELDSARR[r], tab, ":");
+            from = to_index(tab[1] ~ /^$/ ? 1 : tab[1]);
+            to = to_index(tab[2] ~ /^$/ ? NF : tab[2]);
+            for (i=from; i<=to; i++) {
+                printf "%s", $i;
+                if (i != to) {
+                    printf "%s", OFS;
+                }
+            }
+            #printf "from=%s to=%s\n", from, to > "/dev/stderr";
+        } else {
+            printf "Error: Invalid syntax [field=%s]\n", FIELDSARR[r] > "/dev/stderr";
+        }
+    }
+    printf "%s", ORS;
+}
+#END_DO_NOT_MODIFY:make update-script
+EOD
+
+
+while [[ -n "${file}" ]];
+do
+    awk -f ${awkscript} -v list=${list} -F "${delimiter}" -v OFS="${output_delimiter}" ${file}
+    shift
+    file="$1"
+done

@@ -1,0 +1,102 @@
+code_departement,nom_departement,prefecture_departement,region,superficie_km2,nombre_habitants
+01,Ain,Bourg-en-Bresse,Auvergne-Rhône-Alpes,5762,655171
+02,Aisne,Laon,Hauts-de-France,7369,528016
+03,Allier,Moulins,Auvergne-Rhône-Alpes,7340,332882
+04,Alpes-de-Haute-Provence,Digne-les-Bains,Provence-Alpes-Côte d'Azur,6925,16692
+05,Hautes-Alpes,Gap,Provence-Alpes-Côte d'Azur,5548,145631
+06,Alpes-Maritimes,Nice,Provence-Alpes-Côte d'Azur,4299,1082989
+07,Ardèche,Privas,Auvergne-Rhône-Alpes,5566,326336
+08,Ardennes,Charleville-Mézières,Grand Est,5225,271251
+09,Ariège,Foix,Occitanie,4890,155697
+10,Aube,Troyes,Grand Est,6001,315165
+11,Aude,Carcassonne,Occitanie,6343,396441
+12,Aveyron,Rodez,Occitanie,8735,279035
+13,Bouches-du-Rhône,Marseille,Provence-Alpes-Côte d'Azur,5247,2037666
+14,Calvados,Caen,Normandie,5693,715338
+15,Cantal,Aurillac,Auvergne-Rhône-Alpes,5774,141809
+16,Charente,Angoulême,Nouvelle-Aquitaine,5958,354364
+17,Charente-Maritime,La Rochelle,Nouvelle-Aquitaine,6864,648828
+18,Cher,Bourges,Centre-Val de Loire,7238,310008
+19,Corrèze,Tulle,Nouvelle-Aquitaine,5858,241579
+2A,Corse-du-Sud,Ajaccio,Corse,4014,157886
+2B,Haute-Corse,Bastia,Corse,4666,183601
+21,Côte-d'Or,Dijon,Bourgogne-Franche-Comté,8763,533135
+22,Côtes-d'Armor,Saint-Brieuc,Bretagne,6874,606543
+23,Creuse,Gueret,Nouvelle-Aquitaine,5567,116786
+24,Dordogne,Périgueux,Nouvelle-Aquitaine,9060,416578
+25,Doubs,Besançon,Bourgogne-Franche-Comté,5250,542655
+26,Drôme,Valence,Auvergne-Rhône-Alpes,6558,524258
+27,Eure,Évreux,Normandie,6027,605266
+28,Eure-et-Loir,Chartres,Centre-Val de Loire,5885,438172
+29,Finistère,Quimper,Bretagne,6733,913030
+30,Gard,Nîmes,Occitanie,5852
+31,Haute-Garonne,Toulouse,Occitanie,6304,1351738
+32,Gers,Auch,Occitanie,6257,192909
+33,Gironde,Bordeaux,Nouvelle-Aquitaine,9972,1605768
+34,Hérault,Montpellier,Occitanie,6228,1193383
+35,Ille-et-Vilaine,Rennes,Bretagne,6776,1088396
+36,Indre,Châteauroux,Centre-Val de Loire,6954,219850
+37,Indre-et-Loire,Tours,Centre-Val de Loire,6132,607260
+38,Isère,Grenoble,Auvergne-Rhône-Alpes,7436,1284879
+39,Jura,Lons-le-Saunier,Bourgogne-Franche-Comté,4999,258454
+40,Landes,Mont-de-Marsan,Nouvelle-Aquitaine,9249,421377
+41,Loir-et-Cher,Blois,Centre-Val de Loire,6346,334491
+42,Loire,Saint-Étienne,Auvergne-Rhône-Alpes,4788,756516
+43,Haute-Loire,Le Puy-en-Velay,Auvergne-Rhône-Alpes,5003,223025
+44,Loire-Atlantique,Nantes,Pays de la Loire,6824,1525514
+45,Loiret,Orléans,Centre-Val de Loire,6776,688537
+46, Lot,Cahors,Occitanie,5213,178670
+47,Lot-et-Garonne,Agen,Nouvelle-Aquitaine,5386,332970
+48,Lozère,Mende,Occitanie,5168,76 283
+49,Maine-et-Loire,Angers,Pays de la Loire,7209,832631
+50,Manche,Saint-Lô,Normandie,5899,489270
+51,Marne,Châlons-en-Champagne,Grand Est,8215,574309
+52,Haute-Marne,Chaumont,Grand Est,6203,124112
+53,Mayenne,Laval,Pays de la Loire,5167,306080
+54,Meurthe-et-Moselle,Nancy,Grand Est,5224,743352
+55,Meuse,Bar-le-Duc,Grand Est,6241,183404
+56,Morbihan,Vannes,Bretagne,6825,778686
+57,Moselle,Metz,Grand Est,6 216,1 035 732
+58,Nièvre,Nevers,Bourgogne-Franche-Comté,6813,209449
+59,Nord,Lille,Hauts-de-France,5743,2596535
+60,Oise,Beauvais,Hauts-de-France,5883,826154
+61,Orne,Alençon,Normandie,6107,281301
+62,Pas-de-Calais,Arras,Hauts-de-France,6674,1486674
+63,Puy-de-Dôme,Clermont-Ferrand,Auvergne-Rhône-Alpes,7970,671991
+64,Pyrénées-Atlantiques,Pau,Nouvelle-Aquitaine,7642,704451
+65,Hautes-Pyrénées,Tarbes,Occitanie,4464,229438
+66,Pyrénées-Orientales,Perpignan,Occitanie,4117,488809
+67,Bas-Rhin,Strasbourg,Grand Est,4757,1120343
+68,Haut-Rhin,Colmar,Grand Est,3528,768587
+69,Rhône,Lyon,Auvergne-Rhône-Alpes,3243,1890874
+70,Haute-Saône,Vesoul,Bourgogne-Franche-Comté,5699,224578
+71,Saône-et-Loire,Mâcon,Bourgogne-Franche-Comté,8579,549946
+72,Sarthe,Le Mans,Pays de la Loire,6213,590907
+73,Savoie,Chambéry,Auvergne-Rhône-Alpes,6185,441189
+74,Haute-Savoie,Annecy,Auvergne-Rhône-Alpes,4389,833691
+75,Paris,Paris,Île-de-France,105.4,2175601
+76,Seine-Maritime,Rouen,Normandie,6277,1268625
+77,Seine-et-Marne,Melun,Île-de-France,5907,1428064
+78,Yvelines,Versailles,Île-de-France,2284,1445353
+79,Deux-Sèvres,Niort,Nouvelle-Aquitaine,5929,386113
+80,Somme,Amiens,Hauts-de-France,6185,567877
+81,Tarn,Albi,Occitanie,5750,398934
+82,Tarn-et-Garonne,Montauban,Occitanie,3713,267396
+83,Var,Toulon,Provence-Alpes-Côte d'Azur,5974,1071204
+84,Vaucluse,Avignon,Provence-Alpes-Côte d'Azur,3567,558502
+85,Vendée,La Roche-sur-Yon,Pays de la Loire,6727,702155
+86,Vienne,Poitiers,Nouvelle-Aquitaine,6990,441867
+87,Haute-Vienne,Limoges,Nouvelle-Aquitaine,5526,368950
+88,Vosges,Épinal,Grand Est,5874,365913
+89,Yonne,Auxerre,Bourgogne-Franche-Comté,7425,341186
+90,Territoire de Belfort,Belfort,Bourgogne-Franche-Comté,609,145840
+91,Essonne,Évry-Courcouronnes,Île-de-France,1808,1311027
+92,Hauts-de-Seine,Nanterre,Île-de-France,176,1624222
+93,Seine-Saint-Denis,Bobigny,Île-de-France,236,1621282
+94,Val-de-Marne,Créteil,Île-de-France,245,1390848
+95,Val-d'Oise,Pontoise,Île-de-France,1246,1230219
+971,Guadeloupe,Basse-Terre,Guadeloupe,1634,394110
+972,Martinique,Fort-de-France,Martinique,1080,375265
+973,Guyane,Cayenne,Guyane,83534,298682
+974,La Réunion,Saint-Denis,La Réunion,2504,867063
+976,Mayotte,Mamoudzou,Mayotte,374,256518

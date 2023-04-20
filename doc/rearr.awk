@@ -1,65 +1,3 @@
-#!/bin/bash
-
-
-usage() {
-    cat <<-EOF
-#BEGIN_DO_NOT_MODIFY:make update-doc
-#END_DO_NOT_MODIFY:make update-doc
-EOF
-    exit 0
-}
-
-error() {
-    STATUS="$1"
-    MSG="$2"
-    cat >&2 <<-EOF
-${0##*/}: ${MSG}
-Try \`${0##*/} -h\` for more information.
-EOF
-    exit 1
-}
-
-
-while getopts ":hf:c:d:" o
-do
-	  case "$o" in
-		    h)
-                usage
-            ;;
-	    	f)
-                list="${OPTARG}"
-                by='field'
-            ;;
-	    	c)
-                list="${OPTARG}"
-                by='chars'
-            ;;
-            d)
-                delimiter="${OPTARG}"
-            ;;
-            ?)
-                error "An argument is requiered for option -${OPTARG}."
-            ;;
-	  esac
-done
-
-shift $((${OPTIND} - 1))
-
-file="$1"
-if [ -z ${file} ]; then
-    file="-"
-fi
-
-#echo "list: ${list}"
-#echo "by: ${by}"
-#echo "delimiter: ${delimiter}"
-#echo "file: ${file}"
-
-awkscript=$(mktemp)
-
-trap "rm -f ${awkscript}" EXIT
-
-cat - > ${awkscript} <<-'EOD'
 function to_index(field) {
     if (field ~ /^[0-9]+$/) {
         idx = field;
@@ -81,9 +19,7 @@ function to_index(field) {
 }
 
 BEGIN {
-    OFS = FS;
     split(list, FIELDSARR, ",");
-    print list "<" FS ">";
 }
 
 {
@@ -115,11 +51,3 @@ BEGIN {
     }
     printf "%s", ORS;
 }
-EOD
-
-while [[ -n "${file}" ]];
-do
-    awk -f ${awkscript} -v list=${list} -F "${delimiter}" ${file}
-    shift
-    file="$1"
-done

@@ -1,0 +1,55 @@
+REARR(1)                                                                                      User commands                                                                                     REARR(1)
+
+NAME
+       rearr - Rearrange sections in each lines of files
+
+SYNOPSIS
+       rearr [OPTION] [FILE]
+
+DESCRIPTION
+       rearr is a small utility to rearrange sections in each line of files.
+
+       You can remove and duplicate sections and also change the order.
+
+       With no FILE, or when FILE is -, read standard input.
+
+OPTIONS
+       -h
+           Display help.
+
+       -d DELIM
+           Use DELIM instead of TAB for field delimiter.
+
+       -o DELIM
+           Use DELIM as the output delimiter the default is to use the input delimiter.
+
+       -f LIST
+           Select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified. Each item of the list is a number (=1 for the first, -1 for the last)
+           or a range (start:end where values are includes)
+
+       -c LIST
+           select only these characters. Each item of the list is a number (=1 for the first, -1 for the last) or a range (start:end where values are includes)
+
+EXAMPLES
+       Display fields 4, 1 to 3 and the 2 lasts of /etc/passwd changing the output separator to ;.
+
+           $ rearr -f4,1:3,-2: -d: -o';' /etc/passwd | head
+           0;root;x;0;/root;/bin/bash
+           1;daemon;x;1;/usr/sbin;/usr/sbin/nologin
+           2;bin;x;2;/bin;/usr/sbin/nologin
+           3;sys;x;3;/dev;/usr/sbin/nologin
+           65534;sync;x;4;/bin;/bin/sync
+           60;games;x;5;/usr/games;/usr/sbin/nologin
+           12;man;x;6;/var/cache/man;/usr/sbin/nologin
+           7;lp;x;7;/var/spool/lpd;/usr/sbin/nologin
+           8;mail;x;8;/var/mail;/usr/sbin/nologin
+           9;news;x;9;/var/spool/news;/usr/sbin/nologin
+
+AUTHOR
+       Written by Jean-François Giraud.
+
+COPYRIGHT
+       Copyright © 2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There is
+       NO WARRANTY, to the extent permitted by law.
+
+rearrange-columns 0.0.7                                                                        2023-04-19                                                                                       REARR(1)

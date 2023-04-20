@@ -1,0 +1,43 @@
+image:https://img.shields.io/github/actions/workflow/status/jfgiraud/occurrence-count/main.yml?label=CI[https://github.com/jfgiraud/occurrence-count/actions]
+
+== Description
+
+*oc* is a small utility to count occurences of a string or pattern in each line of files.
+
+
+The destination directory will contain 3 sub-directories: `bin`, `share` and `man`.
+
+== Installation
+
+.Using git repo
+[source,shell]
+----
+$ git clone https://github.com/jfgiraud/occurrence-count.git
+$ cd occurrence-count
+$ sudo make install DESTDIR=/usr/local
+----
+
+.Using latest tarball release
+[source,shell]
+----
+$ curl -s -L https://api.github.com/repos/jfgiraud/occurrence-count/releases/latest | grep browser_download_url | cut -d':' -f2- | tr -d ' ",' | xargs wget -O occurrence-count.tgz
+$ sudo tar zxvf occurrence-count.tgz -C /usr/local
+----
+
+== Usage
+
+.Use man
+[source,shell]
+----
+$ man oc
+----
+
+.Use option
+[source,shell]
+----
+$ oc -h
+----
+
+== TLDR
+
+include::rearr.adoc[tag=examples]
