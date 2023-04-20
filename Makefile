@@ -1,5 +1,5 @@
 DESTDIR ?= /usr/local
-REPOSITORY_NAME ?= rearrange-columns
+REPOSITORY_NAME ?= rearrange
 SCRIPTS = rearr
 BIN_SCRIPTS = $(foreach script,$(SCRIPTS),bin/$(script))
 GENERATED_FILES = doc/generated/man/man1/rearr.1 doc/generated/txt/rearr.1.txt doc/generated/md/rearr.md
