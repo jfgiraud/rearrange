@@ -1,27 +1,28 @@
-image:https://img.shields.io/github/actions/workflow/status/jfgiraud/occurrence-count/main.yml?label=CI[https://github.com/jfgiraud/occurrence-count/actions]
+image:https://img.shields.io/github/actions/workflow/status/jfgiraud/rearrange/main.yml?label=CI[https://github.com/jfgiraud/rearrange/actions]
 
 == Description
 
-*oc* is a small utility to count occurences of a string or pattern in each line of files.
+*rearr* is a small utility to rearrange sections in each line of files.
 
-
-The destination directory will contain 3 sub-directories: `bin`, `share` and `man`.
+It can remove and duplicate sections and also change the order of sections.
 
 == Installation
+
+The destination directory will contain 3 sub-directories: `bin`, `share` and `man`.
 
 .Using git repo
 [source,shell]
 ----
-$ git clone https://github.com/jfgiraud/occurrence-count.git
-$ cd occurrence-count
+$ git clone https://github.com/jfgiraud/rearrange.git
+$ cd rearrange
 $ sudo make install DESTDIR=/usr/local
 ----
 
 .Using latest tarball release
 [source,shell]
 ----
-$ curl -s -L https://api.github.com/repos/jfgiraud/occurrence-count/releases/latest | grep browser_download_url | cut -d':' -f2- | tr -d ' ",' | xargs wget -O occurrence-count.tgz
-$ sudo tar zxvf occurrence-count.tgz -C /usr/local
+$ curl -s -L https://api.github.com/repos/jfgiraud/rearrange/releases/latest | grep browser_download_url | cut -d':' -f2- | tr -d ' ",' | xargs wget -O rearrange.tgz
+$ sudo tar zxvf rearrange.tgz -C /usr/local
 ----
 
 == Usage
@@ -29,15 +30,15 @@ $ sudo tar zxvf occurrence-count.tgz -C /usr/local
 .Use man
 [source,shell]
 ----
-$ man oc
+$ man rearr
 ----
 
 .Use option
 [source,shell]
 ----
-$ oc -h
+$ rearr -h
 ----
 
-== TLDR
+== Examples
 
 include::rearr.adoc[tag=examples]

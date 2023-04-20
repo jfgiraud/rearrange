@@ -1,4 +1,4 @@
-REARR(1)                                                                                      User commands                                                                                     REARR(1)
+REARR(1)                                                                                        User commands                                                                                        REARR(1)
 
 NAME
        rearr - Rearrange sections in each lines of files
@@ -9,7 +9,7 @@ SYNOPSIS
 DESCRIPTION
        rearr is a small utility to rearrange sections in each line of files.
 
-       You can remove and duplicate sections and also change the order.
+       It can remove and duplicate sections and also change the order of sections.
 
        With no FILE, or when FILE is -, read standard input.
 
@@ -24,8 +24,8 @@ OPTIONS
            Use DELIM as the output delimiter the default is to use the input delimiter.
 
        -f LIST
-           Select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified. Each item of the list is a number (=1 for the first, -1 for the last)
-           or a range (start:end where values are includes)
+           Select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified. Each item of the list is a number (=1 for the first, -1 for the last) or a
+           range (start:end where values are includes)
 
        -c LIST
            select only these characters. Each item of the list is a number (=1 for the first, -1 for the last) or a range (start:end where values are includes)
@@ -49,7 +49,7 @@ AUTHOR
        Written by Jean-François Giraud.
 
 COPYRIGHT
-       Copyright © 2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There is
-       NO WARRANTY, to the extent permitted by law.
+       Copyright © 2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There  is  NO
+       WARRANTY, to the extent permitted by law.
 
-rearrange-columns 0.0.7                                                                        2023-04-19                                                                                       REARR(1)
+rearrange-columns 0.0.1                                                                           2023-04-20                                                                                         REARR(1)

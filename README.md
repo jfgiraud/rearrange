@@ -1,4 +1,4 @@
-![<https://github.com/jfgiraud/occurrence-count/actions>](https://img.shields.io/github/actions/workflow/status/jfgiraud/occurrence-count/main.yml?label=CI)
+![<https://github.com/jfgiraud/rearrange/actions>](https://img.shields.io/github/actions/workflow/status/jfgiraud/rearrange/main.yml?label=CI)
 
 Description
 ===========
@@ -14,28 +14,28 @@ Installation
 
 **Using git repo.**
 
-    $ git clone https://github.com/jfgiraud/occurrence-count.git
-    $ cd occurrence-count
+    $ git clone https://github.com/jfgiraud/rearrange.git
+    $ cd rearrange
     $ sudo make install DESTDIR=/usr/local
 
 **Using latest tarball release.**
 
-    $ curl -s -L https://api.github.com/repos/jfgiraud/occurrence-count/releases/latest | grep browser_download_url | cut -d':' -f2- | tr -d ' ",' | xargs wget -O occurrence-count.tgz
-    $ sudo tar zxvf occurrence-count.tgz -C /usr/local
+    $ curl -s -L https://api.github.com/repos/jfgiraud/rearrange/releases/latest | grep browser_download_url | cut -d':' -f2- | tr -d ' ",' | xargs wget -O rearrange.tgz
+    $ sudo tar zxvf rearrange.tgz -C /usr/local
 
 Usage
 =====
 
 **Use man.**
 
-    $ man oc
+    $ man rearr
 
 **Use option.**
 
-    $ oc -h
+    $ rearr -h
 
-TLDR
-====
+Examples
+========
 
 **Display fields 4, 1 to 3 and the 2 lasts of `/etc/passwd` changing the
 output separator to `;`..**

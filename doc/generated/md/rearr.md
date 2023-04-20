@@ -14,7 +14,8 @@ DESCRIPTION
 **rearr** is a small utility to rearrange sections in each line of
 files.
 
-You can remove and duplicate sections and also change the order.
+It can remove and duplicate sections and also change the order of
+sections.
 
 With no FILE, or when FILE is `-`, read standard input.
 
