@@ -25,6 +25,9 @@ OPTIONS
 **-h**  
 Display help.
 
+**-v**  
+Display version.
+
 **-d** *DELIM*  
 Use DELIM instead of TAB for field delimiter.
 

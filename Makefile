@@ -57,11 +57,13 @@ doc/generated/txt/%.1.txt: doc/generated/man/man1/%.1 doc/VERSION doc/copyright.
 	@man -l $< > $@
 	@SCRIPT=$(shell basename "$@" | sed 's/\..*//')
 	@echo "Rewrite usage in $$SCRIPT"
-	@awk -i inplace -v input="$@" 'BEGIN { p = 1 } /#BEGIN_DO_NOT_MODIFY:make update-doc/{ print; p = 0; while(getline line<input){print line} } /#END_DO_NOT_MODIFY:make update-doc/{ p = 1 } p' bin/$$SCRIPT
+	@awk -i inplace -v input="$@" 'BEGIN { p = 1 } /^#BEGIN_DO_NOT_MODIFY:make update-doc/{ print; p = 0; while(getline line<input){print line} } /^#END_DO_NOT_MODIFY:make update-doc/{ p = 1 } p' bin/$$SCRIPT
 
 README.md: doc/generated/md/readme.md
-	@echo "Move to README.md"
-	@mv -f doc/generated/md/readme.md README.md
+	@echo "Generate README.md"
+	@printf "\n[//]: # (This file is generated, modify doc/readme.adoc and regenerate it with 'make update-doc')\n\n" > README.md
+	@cat doc/generated/md/readme.md >> README.md
+	@rm -f doc/generated/md/readme.md
 
 .PHONY: update-version
 update-version:
@@ -91,7 +93,6 @@ commit-release: update-version
 	git push
 	git tag "v$$VERSION" -m "Tag v$$VERSION"
 	git push --tags
-
 
 .PHONY: test
 test:
@@ -130,6 +131,6 @@ uninstall:
 .PHONY: clean
 clean:
 	@echo "Clean files"
-	@rm -f $(REPOSITORY_NAME).tar.gz
+	@rm -f $(REPOSITORY_NAME).tar.gz doc/generated/md/readme.md
 
 

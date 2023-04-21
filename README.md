@@ -1,3 +1,6 @@
+
+[//]: # (This file is generated, modify doc/readme.adoc and regenerate it with 'make update-doc')
+
 ![<https://github.com/jfgiraud/rearrange/actions>](https://img.shields.io/github/actions/workflow/status/jfgiraud/rearrange/main.yml?label=CI)
 
 Description

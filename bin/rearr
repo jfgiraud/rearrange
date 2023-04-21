@@ -1,10 +1,10 @@
 #!/bin/bash
 
 
-usage() {
+function usage() {
     (cat <<-EOF
 #BEGIN_DO_NOT_MODIFY:make update-doc
-REARR(1)                                                                                        User commands                                                                                        REARR(1)
+REARR(1)                                                                                 User commands                                                                                 REARR(1)
 
 NAME
        rearr - Rearrange sections in each lines of files
@@ -23,6 +23,9 @@ OPTIONS
        -h
            Display help.
 
+       -v
+           Display version.
+
        -d DELIM
            Use DELIM instead of TAB for field delimiter.
 
@@ -30,8 +33,8 @@ OPTIONS
            Use DELIM as the output delimiter the default is to use the input delimiter.
 
        -f LIST
-           Select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified. Each item of the list is a number (=1 for the first, -1 for the last) or a
-           range (start:end where values are includes)
+           Select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified. Each item of the list is a number (=1 for the first, -1 for
+           the last) or a range (start:end where values are includes)
 
        -c LIST
            select only these characters. Each item of the list is a number (=1 for the first, -1 for the last) or a range (start:end where values are includes)
@@ -55,17 +58,22 @@ AUTHOR
        Written by Jean-François Giraud.
 
 COPYRIGHT
-       Copyright © 2023 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There  is  NO
-       WARRANTY, to the extent permitted by law.
+       Copyright © 2023 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it.
+       There is NO WARRANTY, to the extent permitted by law.
 
-rearrange-columns 0.0.2                                                                           2023-04-20                                                                                         REARR(1)
+rearrange-columns 0.0.3                                                                    2023-04-21                                                                                  REARR(1)
 #END_DO_NOT_MODIFY:make update-doc
 EOF
-) | tail -n +4 | head -n -9
+) | awk '/#BEGIN_DO_NOT_MODIFY:make update-doc/,/^#END_DO_NOT_MODIFY:make update-doc/' | awk '/NAME/,/AUTHOR/' | tail -n +1 | head -n -1
     exit 0
 }
 
-error() {
+function display_version() {
+    grep -B1 '#END_DO_NOT_MODIFY:make update-doc' $0 | head -n1 | cut -d ' ' -f2
+    exit 0
+}
+
+function error() {
     STATUS="$1"
     MSG="$2"
     cat >&2 <<-EOF
@@ -76,35 +84,38 @@ EOF
 }
 
 delimiter="\t"
-while getopts ":hf:c:d:o:" o
+while getopts ":hf:c:d:o:v" o
 do
 	  case "$o" in
 		    h)
                 usage
-            ;;
+                ;;
 	    	f)
                 if [[ -n "${by}" ]]; then
                     error 2 "a list of ${by}s is already defined"
                 fi
                 list="${OPTARG}"
                 by='field'
-            ;;
+                ;;
 	    	c)
                 if [[ -n "${by}" ]]; then
                     error 2 "a list of ${by} is already defined"
                 fi
                 list="${OPTARG}"
                 by='character'
-            ;;
+                ;;
             d)
                 delimiter="${OPTARG}"
-            ;;
+                ;;
             o)
                 output_delimiter="${OPTARG}"
-            ;;
+                ;;
+            v)
+                display_version
+                ;;
             ?)
                 error "An argument is requiered for option -${OPTARG}."
-            ;;
+                ;;
 	  esac
 done
 

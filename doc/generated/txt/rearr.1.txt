@@ -1,4 +1,4 @@
-REARR(1)                                                                                        User commands                                                                                        REARR(1)
+REARR(1)                                                                                 User commands                                                                                 REARR(1)
 
 NAME
        rearr - Rearrange sections in each lines of files
@@ -17,6 +17,9 @@ OPTIONS
        -h
            Display help.
 
+       -v
+           Display version.
+
        -d DELIM
            Use DELIM instead of TAB for field delimiter.
 
@@ -24,8 +27,8 @@ OPTIONS
            Use DELIM as the output delimiter the default is to use the input delimiter.
 
        -f LIST
-           Select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified. Each item of the list is a number (=1 for the first, -1 for the last) or a
-           range (start:end where values are includes)
+           Select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified. Each item of the list is a number (=1 for the first, -1 for
+           the last) or a range (start:end where values are includes)
 
        -c LIST
            select only these characters. Each item of the list is a number (=1 for the first, -1 for the last) or a range (start:end where values are includes)
@@ -49,7 +52,7 @@ AUTHOR
        Written by Jean-François Giraud.
 
 COPYRIGHT
-       Copyright © 2023 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There  is  NO
-       WARRANTY, to the extent permitted by law.
+       Copyright © 2023 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it.
+       There is NO WARRANTY, to the extent permitted by law.
 
-rearrange-columns 0.0.2                                                                           2023-04-20                                                                                         REARR(1)
+rearrange-columns 0.0.3                                                                    2023-04-21                                                                                  REARR(1)

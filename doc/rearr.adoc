@@ -29,6 +29,9 @@ With no FILE, or when FILE is `-`, read standard input.
 *-h*::
 Display help.
 
+*-v*::
+Display version.
+
 *-d* _DELIM_::
 Use DELIM instead of TAB for field delimiter.
 
