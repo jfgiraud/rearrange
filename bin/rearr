@@ -4,7 +4,7 @@
 function usage() {
     (cat <<-EOF
 #BEGIN_DO_NOT_MODIFY:make update-doc
-REARR(1)                                                                                 User commands                                                                                 REARR(1)
+REARR(1)                                                                                        User commands                                                                                        REARR(1)
 
 NAME
        rearr - Rearrange sections in each lines of files
@@ -33,11 +33,14 @@ OPTIONS
            Use DELIM as the output delimiter the default is to use the input delimiter.
 
        -f LIST
-           Select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified. Each item of the list is a number (=1 for the first, -1 for
-           the last) or a range (start:end where values are includes)
+           Select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified. Each item of the list is a number (=1 for the first, -1 for the last) or a
+           range (start:end where values are includes)
 
        -c LIST
            select only these characters. Each item of the list is a number (=1 for the first, -1 for the last) or a range (start:end where values are includes)
+
+       -s
+           do not print lines not containing delimiters
 
 EXAMPLES
        Display fields 4, 1 to 3 and the 2 lasts of /etc/passwd changing the output separator to ;.
@@ -58,10 +61,10 @@ AUTHOR
        Written by Jean-François Giraud.
 
 COPYRIGHT
-       Copyright © 2023 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it.
-       There is NO WARRANTY, to the extent permitted by law.
+       Copyright © 2023 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There  is  NO
+       WARRANTY, to the extent permitted by law.
 
-rearrange-columns 0.0.3                                                                    2023-04-21                                                                                  REARR(1)
+rearrange-columns 0.0.4                                                                           2023-04-28                                                                                         REARR(1)
 #END_DO_NOT_MODIFY:make update-doc
 EOF
 ) | awk '/#BEGIN_DO_NOT_MODIFY:make update-doc/,/^#END_DO_NOT_MODIFY:make update-doc/' | awk '/NAME/,/AUTHOR/' | tail -n +1 | head -n -1
@@ -84,7 +87,8 @@ EOF
 }
 
 delimiter="\t"
-while getopts ":hf:c:d:o:v" o
+only_delimited=0
+while getopts ":hf:c:d:o:vs" o
 do
 	  case "$o" in
 		    h)
@@ -109,6 +113,9 @@ do
                 ;;
             o)
                 output_delimiter="${OPTARG}"
+                ;;
+            s)
+                only_delimited=1
                 ;;
             v)
                 display_version
@@ -168,6 +175,13 @@ BEGIN {
 }
 
 {
+    if ($0 !~ FS) {
+        if (ONLY_DELIMITED ~ /0/) {
+            print $0;
+        }
+        next;
+    }
+
     first=1
     for (r in FIELDSARR) {
         if (first == 0) {
@@ -202,7 +216,7 @@ EOD
 
 while [[ -n "${file}" ]];
 do
-    awk -f ${awkscript} -v list=${list} -F "${delimiter}" -v OFS="${output_delimiter}" ${file}
+    awk -f ${awkscript} -v list=${list} -F "${delimiter}" -v OFS="${output_delimiter}" -v "ONLY_DELIMITED=${only_delimited}" ${file}
     shift
     file="$1"
 done

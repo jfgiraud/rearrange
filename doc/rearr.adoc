@@ -46,10 +46,13 @@ Each item of the list is a number (=1 for the first, -1 for the last) or a range
 select only these characters.
 Each item of the list is a number (=1 for the first, -1 for the last) or a range (start:end where values are includes)
 
+*-s*::
+do not print lines not containing delimiters
+
 
 == EXAMPLES
 // tag::examples[]
-.Display fields 4, 1 to 3 and the 2 lasts of `/etc/passwd` changing the output separator to `;`.
+.Display fields `4`, `1 to 3` and the `2 lasts` of `/etc/passwd` changing the output separator to `;`.
 [source,shell]
 ----
 $ rearr -f4,1:3,-2: -d: -o';' /etc/passwd | head

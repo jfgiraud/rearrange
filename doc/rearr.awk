@@ -23,6 +23,13 @@ BEGIN {
 }
 
 {
+    if ($0 !~ FS) {
+        if (ONLY_DELIMITED ~ /0/) {
+            print $0;
+        }
+        next;
+    }
+
     first=1
     for (r in FIELDSARR) {
         if (first == 0) {

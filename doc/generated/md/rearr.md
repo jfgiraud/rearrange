@@ -46,11 +46,14 @@ select only these characters. Each item of the list is a number (=1 for
 the first, -1 for the last) or a range (start:end where values are
 includes)
 
+**-s**  
+do not print lines not containing delimiters
+
 EXAMPLES
 ========
 
-**Display fields 4, 1 to 3 and the 2 lasts of `/etc/passwd` changing the
-output separator to `;`..**
+**Display fields `4`, `1 to 3` and the `2 lasts` of `/etc/passwd`
+changing the output separator to `;`..**
 
     $ rearr -f4,1:3,-2: -d: -o';' /etc/passwd | head
     0;root;x;0;/root;/bin/bash

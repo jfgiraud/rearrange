@@ -2,12 +2,12 @@
 .\"     Title: rearr
 .\"    Author: [see the "AUTHORS" section]
 .\" Generator: Asciidoctor 1.5.5
-.\"      Date: 2023-04-21
+.\"      Date: 2023-04-28
 .\"    Manual: User commands
-.\"    Source: rearrange-columns 0.0.3
+.\"    Source: rearrange-columns 0.0.4
 .\"  Language: English
 .\"
-.TH "REARR" "1" "2023-04-21" "rearrange\-columns 0.0.3" "User commands"
+.TH "REARR" "1" "2023-04-28" "rearrange\-columns 0.0.4" "User commands"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -63,9 +63,14 @@ Each item of the list is a number (=1 for the first, \-1 for the last) or a rang
 select only these characters.
 Each item of the list is a number (=1 for the first, \-1 for the last) or a range (start:end where values are includes)
 .RE
+.sp
+\fB\-s\fP
+.RS 4
+do not print lines not containing delimiters
+.RE
 .SH "EXAMPLES"
 .sp
-.B Display fields 4, 1 to 3 and the 2 lasts of \f[CR]/etc/passwd\fP changing the output separator to \f[CR];\fP.
+.B Display fields \f[CR]4\fP, \f[CR]1 to 3\fP and the \f[CR]2 lasts\fP of \f[CR]/etc/passwd\fP changing the output separator to \f[CR];\fP.
 .br
 .sp
 .if n \{\
