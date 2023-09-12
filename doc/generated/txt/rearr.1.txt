@@ -28,7 +28,7 @@ OPTIONS
 
        -f LIST
            Select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified. Each item of the list is a number (=1 for the first, -1 for the last) or a
-           range (start:end where values are includes)
+           range (start:end(:step)) where start/end values are includes and the step increment optional.
 
        -c LIST
            select only these characters. Each item of the list is a number (=1 for the first, -1 for the last) or a range (start:end where values are includes)
@@ -58,4 +58,4 @@ COPYRIGHT
        Copyright © 2023 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There  is  NO
        WARRANTY, to the extent permitted by law.
 
-rearrange-columns 0.0.4                                                                           2023-04-28                                                                                         REARR(1)
+rearrange-columns 0.0.5                                                                           2023-09-12                                                                                         REARR(1)

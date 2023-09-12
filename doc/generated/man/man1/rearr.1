@@ -2,12 +2,12 @@
 .\"     Title: rearr
 .\"    Author: [see the "AUTHORS" section]
 .\" Generator: Asciidoctor 1.5.5
-.\"      Date: 2023-04-28
+.\"      Date: 2023-09-12
 .\"    Manual: User commands
-.\"    Source: rearrange-columns 0.0.4
+.\"    Source: rearrange-columns 0.0.5
 .\"  Language: English
 .\"
-.TH "REARR" "1" "2023-04-28" "rearrange\-columns 0.0.4" "User commands"
+.TH "REARR" "1" "2023-09-12" "rearrange\-columns 0.0.5" "User commands"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -55,7 +55,7 @@ Use DELIM as the output delimiter the default is to use the input delimiter.
 \fB\-f\fP \fILIST\fP
 .RS 4
 Select only these fields;  also print any line that contains no delimiter character, unless the \-s option is specified.
-Each item of the list is a number (=1 for the first, \-1 for the last) or a range (start:end where values are includes)
+Each item of the list is a number (=1 for the first, \-1 for the last) or a range (start:end(:step)) where start/end values are includes and the step increment optional.
 .RE
 .sp
 \fB\-c\fP \fILIST\fP

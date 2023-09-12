@@ -34,7 +34,7 @@ OPTIONS
 
        -f LIST
            Select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified. Each item of the list is a number (=1 for the first, -1 for the last) or a
-           range (start:end where values are includes)
+           range (start:end(:step)) where start/end values are includes and the step increment optional.
 
        -c LIST
            select only these characters. Each item of the list is a number (=1 for the first, -1 for the last) or a range (start:end where values are includes)
@@ -64,7 +64,7 @@ COPYRIGHT
        Copyright © 2023 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There  is  NO
        WARRANTY, to the extent permitted by law.
 
-rearrange-columns 0.0.4                                                                           2023-04-28                                                                                         REARR(1)
+rearrange-columns 0.0.5                                                                           2023-09-12                                                                                         REARR(1)
 #END_DO_NOT_MODIFY:make update-doc
 EOF
 ) | awk '/#BEGIN_DO_NOT_MODIFY:make update-doc/,/^#END_DO_NOT_MODIFY:make update-doc/' | awk '/NAME/,/AUTHOR/' | tail -n +1 | head -n -1
@@ -193,14 +193,34 @@ BEGIN {
         if (FIELDSARR[r] ~ /^[0-9]+$/ || FIELDSARR[r] ~ /^-[0-9]+$/) {
             idx = to_index(FIELDSARR[r]);
             printf "%s", $idx;
-        } else if (FIELDSARR[r] ~ /^((-)?[0-9]+)?:((-)?[0-9]+)?$/) {
+        } else if (FIELDSARR[r] ~ /^((-)?[0-9]+)?:((-)?[0-9]+)?(:(-)?[0-9]+)?$/) {
             split(FIELDSARR[r], tab, ":");
-            from = to_index(tab[1] ~ /^$/ ? 1 : tab[1]);
-            to = to_index(tab[2] ~ /^$/ ? NF : tab[2]);
-            for (i=from; i<=to; i++) {
-                printf "%s", $i;
-                if (i != to) {
-                    printf "%s", OFS;
+            if (tab[3] ~ /^[0-9]+$/) {
+                from = to_index(tab[1] ~ /^$/ ? 1 : tab[1]);
+                to = to_index(tab[2] ~ /^$/ ? NF : tab[2]);
+                step = tab[3];
+            } else if (tab[3] ~ /^-[0-9]+$/) {
+                step = tab[3];
+                from = to_index(tab[1] ~ /^$/ ? NF : tab[1]);
+                to = to_index(tab[2] ~ /^$/ ? 1 : tab[2]);
+            } else {
+                from = to_index(tab[1] ~ /^$/ ? 1 : tab[1]);
+                to = to_index(tab[2] ~ /^$/ ? NF : tab[2]);
+                step = 1;
+            }
+            if (step >= 0) {
+                for (i=from; i<=to; i=i+step) {
+                    printf "%s", $i;
+                    if (i != to) {
+                        printf "%s", OFS;
+                    }
+                }
+            } else {
+                for (i=from; i>=to; i=i+step) {
+                    printf "%s", $i;
+                    if (i != to) {
+                        printf "%s", OFS;
+                    }
                 }
             }
             #printf "from=%s to=%s\n", from, to > "/dev/stderr";

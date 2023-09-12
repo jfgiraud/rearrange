@@ -38,8 +38,8 @@ delimiter.
 **-f** *LIST*  
 Select only these fields; also print any line that contains no delimiter
 character, unless the -s option is specified. Each item of the list is a
-number (=1 for the first, -1 for the last) or a range (start:end where
-values are includes)
+number (=1 for the first, -1 for the last) or a range (start:end(:step))
+where start/end values are includes and the step increment optional.
 
 **-c** *LIST*  
 select only these characters. Each item of the list is a number (=1 for
